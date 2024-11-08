@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "br.edu.ifsp.scl.sdm"
-    compileSdk = 34
+    namespace = "br.edu.ifsp.scl.sdm.petbook"
+    compileSdk = 35
 
     defaultConfig {
-        applicationId = "br.edu.ifsp.scl.sdm"
+        applicationId = "br.edu.ifsp.scl.sdm.petbook"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -56,6 +56,7 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.0")
     annotationProcessor("androidx.room:room-compiler:2.6.0")
     ksp("androidx.room:room-compiler:2.6.0")
+    implementation("androidx.room:room-ktx:2.6.0")
 
     // coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
