@@ -7,22 +7,20 @@ import kotlinx.coroutines.flow.Flow
 class AppointmentRepository(private val appointmentDao: AppointmentDao) {
 
     // Método para inserir uma nova consulta
-    suspend fun insert(appointment: Appointment): Long {
+    suspend fun insertAppointment(appointment: Appointment): Long {
         return appointmentDao.insert(appointment)
     }
 
-    // Método para atualizar uma consulta existente
-    suspend fun update(appointment: Appointment) {
+    // Função para atualizar uma consulta existente
+    suspend fun updateAppointment(appointment: Appointment) {
         appointmentDao.update(appointment)
     }
 
-    // Método para excluir uma consulta
-    suspend fun delete(appointment: Appointment) {
+    // Função para deletar uma consulta
+    suspend fun deleteAppointment(appointment: Appointment) {
         appointmentDao.delete(appointment)
     }
 
     // Método para recuperar todas as consultas, retornando como Flow
-    fun getAllAppointments(): Flow<List<Appointment>> {
-        return appointmentDao.getAllAppointments()
-    }
+    fun getAllAppointments(): Flow<List<Appointment>> = appointmentDao.getAllAppointments()
 }

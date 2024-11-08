@@ -1,61 +1,48 @@
 package br.edu.ifsp.scl.sdm.petbook.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import br.edu.ifsp.scl.sdm.petbook.R
+import br.edu.ifsp.scl.sdm.petbook.databinding.FragmentAppointmentDetailsBinding
+import br.edu.ifsp.scl.sdm.petbook.viewmodel.AppointmentViewModel
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [AppointmentDetailsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AppointmentDetailsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var fadb: FragmentAppointmentDetailsBinding
+    private val viewModel: AppointmentViewModel by viewModels()
+    private val args: AppointmentDetailsFragmentArgs by navArgs() // Recebe o ID da consulta dos argumentos de navegação. A ser implementado.
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_appointment_details, container, false)
+    ): View {
+        fadb = FragmentAppointmentDetailsBinding.inflate(inflater, container, false)
+        return fadb.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AppointmentDetailsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AppointmentDetailsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Observa e exibe os dados da consulta no layout. Precisa ser implementado.
+        viewModel.getAppointmentById(args.appointmentId).observe(viewLifecycleOwner) { appointment ->
+            appointment?.let {
+                fadb.etPetName.setText(it.petName)
+                fadb.etClinicName.setText(it.clinicName)
+                fadb.spAppointmentType.setSelection(getAppointmentTypeIndex(it.appointmentType))
+                fadb.etAppointmentDate.setText(it.date)
+                fadb.etDescricaoAtendimento.setText(it.description)
             }
+        }
+    }
+
+    private fun getAppointmentTypeIndex(type: String): Int {
+        // Aqui, preciso implementar uma lógica para encontrar o índice do tipo de consulta no Spinner
+        val types = resources.getStringArray(R.array.appointment_types)
+        return types.indexOf(type)
     }
 }

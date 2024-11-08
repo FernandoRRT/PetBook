@@ -9,4 +9,11 @@
     <string name="enter_the_clinic_name">Enter the clinic name</string>
     <string name="procedures_performed_consultation_details">Procedures performed, consultation details</string>
     <string name="enter_the_details">Enter the details</string>
+    <string-array name="appointment_types">
+        <item>Consultation</item>
+        <item>Vaccination</item>
+        <item>Check-up</item>
+        <item>Surgery</item>
+        <item>Emergency</item>
+    </string-array>
 </resources>
